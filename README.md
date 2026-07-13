@@ -10,6 +10,10 @@ Built for the [Slack Agent Builder Challenge](https://slackhack.devpost.com/) â€
 
 ![FollowThrough architecture](docs/architecture.svg)
 
+## Demo video
+
+Watch the FollowThrough demo: [YouTube](https://youtu.be/PXjwQDXtBSg)
+
 ## Why it matters
 
 Commitments are already made in Slack, but they disappear into the message stream. Existing task tools require people to stop, copy the promise, open another product, and maintain it. FollowThrough removes that tax while keeping people in control.
