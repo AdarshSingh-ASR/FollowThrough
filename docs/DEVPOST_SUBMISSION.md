@@ -29,7 +29,7 @@ People can view their commitments from App Home, `/followthrough`, mentions, or 
 ## How we built it
 
 - Slack native Agent Messages experience through `agent_view`
-- Gemini 3.5 Flash primary extraction with Groq strict structured-output failover
+- Primary AI extraction with Groq strict structured-output failover
 - Slack Real-time Search through `assistant.search.context` for user-triggered live context queries
 - Bolt for JavaScript running over Socket Mode
 - Slack Events API for conversation signals
