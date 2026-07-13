@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
 import { buildDeadlineOptions, detectCommitment as detectWithRules } from "./detector.js";
 
-const DEFAULT_MODEL = "gemini-3.5-flash";
+const DEFAULT_MODEL = "gemini-2.5-pro";
 const DEFAULT_GROQ_MODEL = "openai/gpt-oss-20b";
 const DEFAULT_GROQ_TIMEOUT_MS = 15_000;
 const GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions";
@@ -40,6 +40,9 @@ const commitmentSchema = z.object({
 export function createCommitmentDetector({
   apiKey = process.env.GEMINI_API_KEY,
   model = process.env.GEMINI_MODEL ?? DEFAULT_MODEL,
+  vertexProject = process.env.VERTEX_AI_PROJECT ?? process.env.GOOGLE_CLOUD_PROJECT,
+  vertexLocation = process.env.VERTEX_AI_LOCATION ?? process.env.GOOGLE_CLOUD_LOCATION ?? "us-central1",
+  vertexServiceAccountJson = process.env.VERTEX_SERVICE_ACCOUNT_JSON ?? process.env.GOOGLE_VERTEX_CREDENTIALS,
   groqApiKey = process.env.GROQ_API_KEY,
   groqModel = process.env.GROQ_MODEL ?? DEFAULT_GROQ_MODEL,
   groqRequest = fetch,
@@ -47,7 +50,18 @@ export function createCommitmentDetector({
   analyzeAll = process.env.GEMINI_ANALYZE_ALL === "true",
   client,
 } = {}) {
-  const gemini = client ?? (apiKey ? new GoogleGenAI({ apiKey }) : null);
+  const vertexAuth = parseVertexCredentials(vertexServiceAccountJson);
+  const resolvedVertexProject = vertexProject ?? vertexAuth?.project_id;
+  const gemini = client ?? (resolvedVertexProject
+    ? new GoogleGenAI({
+      vertexai: true,
+      project: resolvedVertexProject,
+      location: vertexLocation,
+      apiVersion: "v1",
+      ...(vertexAuth ? { googleAuthOptions: { credentials: vertexAuth } } : {}),
+    })
+    : (apiKey ? new GoogleGenAI({ apiKey }) : null));
+  const geminiProvider = resolvedVertexProject ? "vertex" : "gemini";
 
   return async function detect(input) {
     if (!analyzeAll && !shouldAnalyze(input.text)) return null;
@@ -57,13 +71,13 @@ export function createCommitmentDetector({
     if (gemini) {
       try {
         const parsed = await extractWithGemini(gemini, { input, model, allowedPromiseeIds });
-        return normalizeGeminiCommitment(parsed, input, { model, allowedPromiseeIds, provider: "gemini" });
+        return normalizeGeminiCommitment(parsed, input, { model, allowedPromiseeIds, provider: geminiProvider });
       } catch (error) {
         failures.push(`Gemini: ${error.message}`);
         console.warn(`Gemini extraction failed; trying Groq: ${error.message}`);
       }
     } else {
-      failures.push("Gemini API key is not configured");
+      failures.push("Vertex AI project or Gemini API key is not configured");
     }
 
     if (groqApiKey) {
@@ -87,6 +101,19 @@ export function createCommitmentDetector({
 
     return rulesFallback(input, failures.join("; "));
   };
+}
+
+function parseVertexCredentials(value) {
+  if (!value) return null;
+  try {
+    return JSON.parse(value);
+  } catch {
+    try {
+      return JSON.parse(Buffer.from(value, "base64").toString("utf8"));
+    } catch {
+      throw new Error("Vertex service-account credentials must be JSON or base64-encoded JSON");
+    }
+  }
 }
 
 async function extractWithGemini(gemini, { input, model, allowedPromiseeIds }) {
