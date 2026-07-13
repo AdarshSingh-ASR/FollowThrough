@@ -88,7 +88,7 @@ app.message(async ({ message: event, client, context, logger }) => {
   }
 });
 
-app.action(/^deadline_clarify_\d+$/, async ({ ack, action, body, client }) => {
+app.action("deadline_clarify", async ({ ack, action, body, client }) => {
   await ack();
   const { id, dueAt } = JSON.parse(action.value);
   const record = await store.update(id, {
