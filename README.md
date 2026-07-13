@@ -108,6 +108,36 @@ NUDGE_LEAD_MINUTES=5
 
 The app uses Slack's native `agent_view`, Events API, Block Kit, App Home, interactive actions, slash commands, and Socket Mode. It runs as a single Node.js service for a reliable hackathon demo; the persistence adapter can later be swapped for Postgres or DynamoDB without changing Slack handlers.
 
+```mermaid
+flowchart LR
+    A[Slack conversations] --> B[FollowThrough Slack App<br/>Socket Mode]
+
+    B --> C[Commitment detection]
+    C --> D[Vertex AI Gemini]
+    D -->|Unavailable| E[Groq]
+    E -->|Unavailable| F[Safe rules fallback]
+
+    D --> G[Structured commitment<br/>Who · What · Deadline · Promisee]
+    E --> G
+    F --> G
+
+    G --> H{Deadline clear?}
+    H -->|No| I[Ask one date clarification]
+    I --> J[Human confirmation]
+    H -->|Yes| J
+
+    J -->|Track it| K[Commitment store]
+    J -->|Not a commitment| L[Discard]
+
+    K --> M[Private Slack nudges<br/>Done · Snooze · Thread context]
+    K --> N[Weekly digest]
+    K --> O[MCP sync]
+    O --> P[Notion database]
+
+    M --> Q[Mark complete]
+    Q --> K
+```
+
 The submission-ready diagram is available as [docs/architecture.png](docs/architecture.png), with vector and editable sources in [docs/architecture.svg](docs/architecture.svg) and [docs/architecture.mmd](docs/architecture.mmd).
 
 ## Trust and privacy
