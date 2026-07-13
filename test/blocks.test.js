@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { clarificationBlocks } from "../src/blocks.js";
 
-test("deadline clarification buttons have unique Slack action IDs", () => {
+test("deadline clarification buttons share the stable Slack action ID", () => {
   const blocks = clarificationBlocks({
     id: "commitment-1",
     action: "circle back on the hiring plan",
@@ -14,6 +14,6 @@ test("deadline clarification buttons have unique Slack action IDs", () => {
     ],
   });
   const ids = blocks.find((block) => block.type === "actions").elements.map((element) => element.action_id);
-  assert.deepEqual(ids, ["deadline_clarify_0", "deadline_clarify_1", "deadline_clarify_2"]);
+  assert.deepEqual(ids, ["deadline_clarify", "deadline_clarify", "deadline_clarify"]);
   assert.equal(new Set(ids).size, ids.length);
 });

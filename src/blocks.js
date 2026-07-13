@@ -16,7 +16,7 @@ export function clarificationBlocks(record) {
     },
     {
       type: "actions",
-      elements: options.map((dueAt, index) => button(
+      elements: options.map((dueAt) => button(
         new Intl.DateTimeFormat("en", { weekday: "long", month: "short", day: "numeric" }).format(new Date(dueAt)),
         "deadline_clarify",
         JSON.stringify({ id: record.id, dueAt }),
