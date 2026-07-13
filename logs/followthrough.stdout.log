@@ -1,0 +1,7 @@
+
+> followthrough-slack-agent@1.0.0 start
+> node src/app.js
+
+⚡ FollowThrough is running on port 3001
+🧠 Gemini extraction enabled (gemini-3.5-flash)
+⚡ Groq AI fallback enabled (openai/gpt-oss-20b)

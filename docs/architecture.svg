@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">FollowThrough architecture</title>
+  <desc id="desc">Slack events flow through commitment detection and human confirmation into a minimal store, scheduler, private nudges, App Home, and Agent Messages.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#160d1b"/><stop offset="1" stop-color="#321335"/></linearGradient>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#611f69"/><stop offset="1" stop-color="#9b4aa3"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity=".28"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#d8b4dc"/></marker>
+    <style>
+      .title{font:700 52px Inter,Segoe UI,sans-serif;fill:#fff}.subtitle{font:400 22px Inter,Segoe UI,sans-serif;fill:#d9c4dc}.label{font:700 21px Inter,Segoe UI,sans-serif;fill:#fff}.label-sm{font:700 19px Inter,Segoe UI,sans-serif;fill:#fff}.label-xs{font:700 16px Inter,Segoe UI,sans-serif;fill:#fff}.small{font:400 15.5px Inter,Segoe UI,sans-serif;fill:#eadfed}.eyebrow{font:700 15px Inter,Segoe UI,sans-serif;letter-spacing:2px;fill:#73e1c2}.node{fill:#28152d;stroke:#805188;stroke-width:2}.accent{fill:url(#hero);stroke:#c982d1;stroke-width:2}.outcome{fill:#17342f;stroke:#3ec7a0;stroke-width:2}.line{fill:none;stroke:#d8b4dc;stroke-width:4;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="900" rx="28" fill="url(#bg)"/>
+  <text x="80" y="88" class="eyebrow">FOLLOWTHROUGH • SLACK AGENT BUILDER CHALLENGE</text>
+  <text x="80" y="150" class="title">From “I’ll do it” to done.</text>
+  <text x="80" y="190" class="subtitle">A human-confirmed accountability loop that stays inside Slack.</text>
+
+  <path class="line" d="M310 375 H410"/><path class="line" d="M670 375 H770"/><path class="line" d="M1030 375 H1130"/>
+  <path class="line" d="M1180 460 V520 H705 V565"/><path class="line" d="M1220 460 V530 H1030 V565"/><path class="line" d="M1280 460 V565"/>
+  <path class="line" d="M1410 695 H1490 V375 H1430"/>
+
+  <g filter="url(#shadow)"><rect class="node" x="70" y="290" width="240" height="170" rx="22"/><text x="100" y="335" class="eyebrow">01 • LISTEN</text><text x="100" y="380" class="label">Slack conversations</text><text x="100" y="417" class="small">Events API</text><text x="100" y="443" class="small">Channel membership scoped</text></g>
+  <g filter="url(#shadow)"><rect class="node" x="410" y="290" width="260" height="170" rx="22"/><text x="440" y="335" class="eyebrow">02 • UNDERSTAND</text><text x="440" y="380" class="label-xs">Gemini → Groq → safe rules</text><text x="440" y="417" class="small">Who + what + date + promisee</text><text x="440" y="443" class="small">Validated schema + safe fallback</text></g>
+  <g filter="url(#shadow)"><rect class="accent" x="770" y="290" width="260" height="170" rx="22"/><text x="800" y="335" class="eyebrow">03 • CONFIRM</text><text x="800" y="380" class="label">Human checkpoint</text><text x="800" y="417" class="small">Track it</text><text x="900" y="417" class="small">Not a commitment</text><text x="800" y="443" class="small">Nothing automatic before consent</text></g>
+  <g filter="url(#shadow)"><rect class="node" x="1130" y="290" width="300" height="170" rx="22"/><text x="1160" y="335" class="eyebrow">04 • REMEMBER</text><text x="1160" y="380" class="label-sm">Minimal commitment store</text><text x="1160" y="417" class="small">Action • owner • due date • status</text><text x="1160" y="443" class="small">No original message body retained</text></g>
+
+  <g filter="url(#shadow)"><rect class="node" x="450" y="565" width="255" height="160" rx="22"/><text x="480" y="610" class="eyebrow">VISIBLE</text><text x="480" y="655" class="label">App Home</text><text x="480" y="692" class="small">Personal and team pulse</text></g>
+  <g filter="url(#shadow)"><rect class="node" x="775" y="565" width="255" height="160" rx="22"/><text x="805" y="610" class="eyebrow">CONVERSATIONAL</text><text x="805" y="655" class="label">Native Agent Messages</text><text x="805" y="692" class="small">Ask what’s due and what’s late</text></g>
+  <g filter="url(#shadow)"><rect class="node" x="1150" y="565" width="260" height="160" rx="22"/><text x="1180" y="610" class="eyebrow">05 • FOLLOW UP</text><text x="1180" y="655" class="label">Private nudge</text><text x="1180" y="692" class="small">Done • Snooze • View context</text></g>
+
+  <text x="420" y="770" class="eyebrow">GEMINI 3.5 FLASH  •  REAL-TIME SEARCH  •  MCP SYNC  •  WEEKLY DIGESTS  •  OPT-IN ESCALATION</text>
+  <g filter="url(#shadow)"><rect class="outcome" x="560" y="800" width="480" height="62" rx="20"/><text x="620" y="839" class="label">Closed loops without public shaming ✓</text></g>
+</svg>

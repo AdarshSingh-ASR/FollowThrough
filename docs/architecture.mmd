@@ -1,0 +1,18 @@
+flowchart LR
+    A["Slack conversations\nEvents API"] --> B["Gemini → Groq → safe rules\nwho + what + date + promisee"]
+    B --> C{"Human confirms?"}
+    C -->|"Track it"| D["Commitment store\nminimal metadata"]
+    C -->|"Ignore"| E["Discard"]
+    D --> F["Nudge scheduler"]
+    F --> G["Private DM\nDone / Snooze"]
+    G --> D
+    D --> H["App Home dashboard"]
+    D --> I["Native Agent Messages"]
+    D --> J["/followthrough + mentions"]
+    I --> L["Real-time Search\nuser-triggered live context"]
+    D --> M["MCP tracker sync\nNotion / Linear / Sheets"]
+    F --> N["Weekly digest"]
+    F --> O["Opt-in escalation"]
+    K["Slack Block Kit"] --> C
+    K --> G
+    K --> H
