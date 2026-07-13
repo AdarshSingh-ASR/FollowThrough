@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
 import { buildDeadlineOptions, detectCommitment as detectWithRules } from "./detector.js";
 
-const DEFAULT_MODEL = "gemini-2.5-pro";
+const DEFAULT_MODEL = "gemini-2.5-flash";
 const DEFAULT_GROQ_MODEL = "openai/gpt-oss-20b";
 const DEFAULT_GROQ_TIMEOUT_MS = 15_000;
 const GROQ_CHAT_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions";
