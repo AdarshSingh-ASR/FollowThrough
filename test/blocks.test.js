@@ -15,5 +15,5 @@ test("deadline clarification buttons share the stable Slack action ID", () => {
   });
   const ids = blocks.find((block) => block.type === "actions").elements.map((element) => element.action_id);
   assert.deepEqual(ids, ["deadline_clarify", "deadline_clarify", "deadline_clarify"]);
-  assert.equal(new Set(ids).size, ids.length);
+  assert.equal(new Set(ids).size, 1);
 });
